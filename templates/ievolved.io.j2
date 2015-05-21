@@ -1,0 +1,27 @@
+
+server {
+	listen 80;
+	server_name ievolved.io *.ievolved.io localhost;
+	
+	root  {{ievolved_nginx_root}};
+	access_log {{ nginx_log_dir }}/ievolved.io json;
+	
+	location / {
+		if (-f $document_root/maintenance.html) {
+			return 503;
+		}
+		proxy_pass http://{{ ghost_bind_address }}:{{ghost_port}};
+		proxy_set_header HOST $http_host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_redirect off;
+	}
+
+	location /nginx_status {
+		stub_status on;
+		access_log   on;
+		allow 127.0.0.1;
+		deny all;
+	}
+}
+

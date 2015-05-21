@@ -1,0 +1,14 @@
+---
+
+- name: config - nginx site folder for ievolved.io
+  file:
+    state=directory
+    path={{ ievolved_nginx_root }}
+    mode=755
+
+- name: configure - nginx config ievolved.io
+  template:
+    src=ievolved.io.j2
+    dest={{ nginx_sites_dir }}/ievolved.io
+  notify: restart nginx
+

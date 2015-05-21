@@ -1,0 +1,12 @@
+# ansible-galaxy install -r requirements.yml
+
+- src: https://github.com/gotansible/ghost
+  name: gotansible.ghost
+
+- src: https://github.com/gotansible/nginx
+  name: gotansible.nginx
+
+- src: gotansible.runit
+- src: gotansible.nodejs
+
+

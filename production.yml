@@ -1,0 +1,32 @@
+---
+- hosts: all
+  sudo: true
+  vars:
+    ievolved_domain: ievolved.io
+    ghost_bind_address: "127.0.0.1"
+    ievolved_nginx_root: /srv/ievolved.io
+    build_dir: /var/ansible/cache
+  roles:
+    - role: gotansible.ghost
+      ghost_build_dir: "{{ build_dir }}/ghost"
+      ghost_env_vars:
+        NODE_ENV: production
+      ghost_public_hostname: 'http://{{ ievolved_domain }}'
+      ghost_port: 2368
+      ghost_allow_filestorage: true
+      ghost_compress: false
+      ghost_forceAdminSSL: false
+      ghost_mail:
+        transport: SMTP
+        options: 
+          host: mail.lookwrite.com
+          port: 25
+          auth:
+            user: ievolved@lookwrite.com
+            pass: "{{ smtp_password|default('')}}"
+    - role: gotansible.nginx
+      nginx_openssl_hdparam_bits: 2048
+      nginx_build_dir: "{{ build_dir }}/nginx"
+  tasks:
+    - include: tasks/config.yml
+

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+ansible-playbook production.yml -i inventory.ini --ask-vault-pass
+
+
