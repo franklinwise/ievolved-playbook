@@ -6,7 +6,11 @@ Vagrant.configure(VAGRANT_VERSION) do |config|
 		server.vm.box = "hashicorp/precise64"
 		server.vm.hostname = "ievolved-playbook"
 		server.vm.provision :ansible do |ansible|
-			ansible.playbook = "production.yml, nginx_openssl_hdparam_bits=512"
+			ansible.playbook = "production.yml"
+			ansible.ask_vault_pass = true
+            ansible.extra_vars = {
+              nginx_openssl_hdparam_bits: 512
+            }
 		end
 	end
 end

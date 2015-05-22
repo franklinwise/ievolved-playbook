@@ -1,6 +1,8 @@
 ---
 - hosts: all
   sudo: true
+  vars_files:
+    - smtp.yml
   vars:
     ievolved_domain: ievolved.io
     ghost_bind_address: "127.0.0.1"
@@ -23,7 +25,7 @@
           port: 25
           auth:
             user: ievolved@lookwrite.com
-            pass: "{{ smtp_password|default('')}}"
+            pass: "{{ smtp_password }}"
     - role: gotansible.nginx
       nginx_openssl_hdparam_bits: 2048
       nginx_build_dir: "{{ build_dir }}/nginx"

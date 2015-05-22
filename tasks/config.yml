@@ -1,5 +1,4 @@
 ---
-
 - name: config - nginx site folder for ievolved.io
   file:
     state=directory
